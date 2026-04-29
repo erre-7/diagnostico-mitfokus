@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Comercial — Mitfokus × Cloud Humans</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand:#1F3158; --brand-dark:#0E1A30; --brand-light:#E5EAF3; --brand-mid:#7986a8;
+  --teal:#2DD4BF; --teal-light:#dff5ee;
+  --ch-orange:#FF8C42; --ch-orange-light:#FFF5EE;
+  --green:#10B981; --green-light:#ECFDF5;
+  --amber:#F59E0B; --amber-light:#FFFBEB;
+  --blue:#3B82F6; --blue-light:#EFF6FF;
+  --purple:#8B5CF6; --purple-light:#F3EEFE;
+  --red:#EF4444; --red-light:#FEE2E2;
+  --dark:#0d1830; --gray:#6B7280;
+  --gray-light:#FBFCF7; --gray-border:#E5E9DC;
+  --white:#FFFFFF; --text:#0e1a30;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:var(--gray-light); color:var(--text); min-height:100vh; }
+.site-header { background:var(--white); border-bottom:1px solid var(--gray-border); padding:0 2rem;
+  display:flex; align-items:center; justify-content:space-between; height:60px; position:sticky; top:0; z-index:100; overflow:visible; }
+.logos { display:flex; align-items:center; gap:1.25rem; }
+.logo-client img { height:36px; width:auto; display:block; }
+.logo-sep { width:1px; height:24px; background:var(--gray-border); }
+.logo-ch img { height:32px; width:auto; display:block; }
+.header-badge { background:var(--brand-light); color:var(--brand-dark); font-size:0.75rem; font-weight:600; padding:0.3rem 0.75rem; border-radius:20px; letter-spacing:0.02em; }
+.nav-tabs { background:var(--white); border-bottom:1px solid var(--gray-border); display:flex; padding:0 2rem; overflow-x:auto; position:sticky; top:60px; z-index:90; }
+.nav-tab { padding:0.875rem 1.25rem; font-size:0.85rem; font-weight:500; color:var(--gray); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap;
+  transition:all 0.2s; background:none; border-top:none; border-left:none; border-right:none; font-family:'DM Sans',sans-serif; }
+.nav-tab:hover { color:var(--brand); }
+.nav-tab.active { color:var(--brand); border-bottom-color:var(--brand); font-weight:600; }
+.main { max-width:1100px; margin:0 auto; padding:2.5rem 2rem; }
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+.section-header { margin-bottom:2rem; }
+.section-title { font-size:1.5rem; font-weight:700; color:var(--text); letter-spacing:-0.02em; }
+.section-subtitle { font-size:0.875rem; color:var(--gray); margin-top:0.35rem; }
+.section-rule { width:32px; height:3px; background:var(--brand); border-radius:2px; margin-top:0.6rem; }
+.hero-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:0.75rem; margin-bottom:1rem; }
+.hero-card { background:var(--white); border:1px solid var(--gray-border); border-radius:14px; padding:1.1rem; position:relative; overflow:hidden; }
+.hero-card.featured { background:linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%); border-color:transparent; }
+.hero-card .label { font-size:0.66rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray); margin-bottom:0.4rem; }
+.hero-card.featured .label { color:rgba(255,255,255,0.85); }
+.hero-card .value { font-size:1.55rem; font-weight:700; color:var(--text); letter-spacing:-0.03em; line-height:1; }
+.hero-card.featured .value { color:white; font-size:1.85rem; }
+.hero-card .sub { font-size:0.7rem; color:var(--gray); margin-top:0.4rem; line-height:1.4; }
+.hero-card.featured .sub { color:rgba(255,255,255,0.85); }
+.accent-bar { position:absolute; bottom:0; left:0; height:3px; width:100%; background:var(--brand); border-radius:0 0 14px 14px; }
+.hero-card.featured .accent-bar { background:rgba(255,255,255,0.3); }
+.sc-sel-row { display:flex; align-items:center; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap; }
+.sc-sel-btn { padding:0.35rem 0.9rem; border-radius:20px; font-size:0.8rem; font-weight:600; cursor:pointer;
+  border:1.5px solid var(--gray-border); background:white; color:var(--gray); transition:all 0.15s; font-family:'DM Sans',sans-serif; }
+.sc-sel-btn:hover { border-color:var(--brand); color:var(--brand); }
+.sc-sel-btn.active { background:var(--brand); border-color:var(--brand); color:white; }
+.sc-sel-btn.custom { border-color:var(--brand); color:var(--brand-dark); }
+.sc-sel-btn.custom.active { background:var(--brand-dark); border-color:var(--brand-dark); }
+.tag-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:2rem; }
+.tag-card { background:var(--white); border:1px solid var(--gray-border); border-radius:12px; padding:1.25rem; border-top:3px solid var(--brand); }
+.tag-card.orange { border-top-color:var(--ch-orange); }
+.tag-card.blue { border-top-color:var(--blue); }
+.tag-card.purple { border-top-color:var(--purple); }
+.tag-name { font-weight:700; font-size:0.95rem; color:var(--text); margin-bottom:0.25rem; }
+.tag-badge { display:inline-block; font-size:0.7rem; font-weight:700; padding:0.2rem 0.5rem; border-radius:6px; margin-bottom:0.75rem; background:var(--brand-light); color:var(--brand-dark); }
+.tag-desc { font-size:0.8rem; color:var(--gray); line-height:1.5; }
+.tag-pills { display:flex; gap:0.4rem; margin-top:0.75rem; flex-wrap:wrap; }
+.pill { font-size:0.68rem; font-weight:700; padding:0.2rem 0.5rem; border-radius:4px; }
+.pill-brand { background:var(--brand-light); color:var(--brand-dark); }
+.pill-orange { background:var(--ch-orange-light); color:var(--ch-orange); }
+.pill-blue { background:var(--blue-light); color:var(--blue); }
+.pill-purple { background:var(--purple-light); color:var(--purple); }
+.info-box { background:var(--green-light); border-left:3px solid var(--green); border-radius:0 10px 10px 0; padding:1rem 1.25rem; margin-top:1.5rem; font-size:0.875rem; color:var(--text); line-height:1.55; }
+.info-box strong { color:var(--green); }
+.brand-info-box { background:var(--brand-light); border-left:3px solid var(--brand); border-radius:0 10px 10px 0; padding:1rem 1.25rem; margin-bottom:2rem; font-size:0.85rem; color:var(--brand-dark); display:flex; align-items:center; gap:1rem; }
+.comp-section { background:var(--white); border:1px solid var(--gray-border); border-radius:14px; padding:1.75rem; }
+.comp-title { font-size:1rem; font-weight:700; margin-bottom:0.25rem; }
+.comp-sub { font-size:0.8rem; color:var(--gray); margin-bottom:1.5rem; }
+.bar-row { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.25rem; padding-bottom:1rem; border-bottom:1px dashed var(--gray-border); }
+.bar-row:last-of-type { border-bottom:none; padding-bottom:0; margin-bottom:0; }
+.bar-label { width:260px; flex-shrink:0; padding-top:0.15rem; }
+.bar-label .name { font-size:0.85rem; font-weight:600; color:var(--text); display:block; margin-bottom:0.2rem; line-height:1.3; }
+.bar-label .desc { font-size:0.72rem; color:var(--gray); line-height:1.45; display:block; }
+.bar-row .bar-track-wrap { flex:1; display:flex; align-items:center; gap:0.75rem; padding-top:0.25rem; }
+.bar-track { flex:1; height:28px; background:var(--gray-light); border-radius:6px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:6px; display:flex; align-items:center; padding-left:0.75rem; transition:width .25s ease; }
+.bar-fill span { font-size:0.72rem; font-weight:600; color:white; white-space:nowrap; }
+.bar-pct { font-size:0.85rem; font-weight:700; color:var(--text); width:42px; text-align:right; }
+.bar-tag { font-size:0.7rem; font-weight:600; padding:0.15rem 0.5rem; border-radius:4px; width:90px; text-align:center; flex-shrink:0; }
+.bar-tag.edicao { background:var(--ch-orange-light); color:var(--ch-orange); }
+.bar-tag.conteudo { background:var(--brand-light); color:var(--brand-dark); }
+.bar-tag.visualizacao { background:var(--blue-light); color:var(--blue); }
+.bar-tag.n3 { background:var(--purple-light); color:var(--purple); }
+.bar-tag.ruido { background:var(--red-light); color:var(--red); }
+.bar-customize { display:flex; align-items:center; gap:0.5rem; }
+.bar-customize select { padding:0.25rem 0.4rem; font-size:0.7rem; border:1px solid var(--gray-border); border-radius:6px; background:white; font-family:'DM Sans',sans-serif; cursor:pointer; }
+.bar-customize input[type=range] { width:80px; accent-color:var(--brand); }
+.bar-customize .ret-pct { font-family:'DM Mono',monospace; font-size:0.7rem; font-weight:700; color:var(--brand-dark); width:36px; text-align:right; }
+.switch-mini { position:relative; display:inline-block; width:32px; height:18px; }
+.switch-mini input { opacity:0; width:0; height:0; }
+.switch-mini span { position:absolute; cursor:pointer; inset:0; background:#cbd0bf; border-radius:18px; transition:.2s; }
+.switch-mini span::before { content:""; position:absolute; height:14px; width:14px; left:2px; top:2px; background:white; border-radius:50%; transition:.2s; }
+.switch-mini input:checked + span { background:var(--brand); }
+.switch-mini input:checked + span::before { transform:translateX(14px); }
+.bar-row.excluded { opacity:0.4; }
+.bar-row.excluded .bar-fill { background:#cbd0bf !important; }
+.ctrl-btn { width:36px; height:36px; border-radius:50%; border:2px solid var(--brand); background:white; color:var(--brand); font-size:1.2rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; font-family:'DM Sans',sans-serif; }
+.ctrl-btn:hover { background:var(--brand); color:white; }
+.ctrl-val-op { font-size:1.4rem; font-weight:700; color:var(--brand); min-width:4.5rem; text-align:center; font-family:'DM Mono',monospace; }
+.op-sep { width:1px; background:var(--brand-mid); align-self:stretch; opacity:0.4; }
+.impact-card { background:var(--white); border:1px solid var(--gray-border); border-radius:14px; padding:1.5rem; }
+.impact-card.highlight { border-color:var(--brand); }
+.impact-label { font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray); margin-bottom:0.75rem; }
+.impact-compare { display:flex; align-items:center; gap:1rem; margin-bottom:0.75rem; }
+.impact-before, .impact-after { text-align:center; flex:1; }
+.impact-arrow { font-size:1.2rem; color:var(--brand); }
+.impact-val { font-size:1.6rem; font-weight:800; font-family:'DM Mono',monospace; letter-spacing:-0.03em; line-height:1; }
+.impact-val.before { color:var(--gray); }
+.impact-val.after { color:var(--green); }
+.impact-sub { font-size:0.72rem; color:var(--gray); margin-top:0.3rem; }
+.impact-delta { font-size:0.78rem; font-weight:700; background:var(--green-light); color:var(--green); padding:0.25rem 0.65rem; border-radius:20px; display:inline-block; }
+.scale-card { background:var(--gray-light); border-radius:12px; padding:1.25rem; text-align:center; }
+.scale-card.featured { background:var(--brand-light); border:1.5px solid var(--brand-mid); }
+.scale-val { font-family:'DM Mono',monospace; font-size:1.8rem; font-weight:700; color:var(--brand); letter-spacing:-0.03em; }
+.scale-label { font-size:0.78rem; color:var(--gray); margin-top:0.3rem; line-height:1.4; }
+.time-card { background:var(--white); border:1px solid var(--gray-border); border-radius:12px; padding:1.25rem; }
+.time-icon { font-size:1.4rem; margin-bottom:0.5rem; }
+.time-title { font-size:0.9rem; font-weight:700; color:var(--text); margin-bottom:0.3rem; }
+.time-desc { font-size:0.78rem; color:var(--gray); line-height:1.45; }
+.methods-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+.method-card { background:var(--white); border:1px solid var(--gray-border); border-radius:12px; overflow:hidden; }
+.method-head { background:var(--brand); color:white; padding:0.875rem 1rem; font-weight:700; font-size:0.9rem; }
+.method-body { padding:1rem; }
+.method-desc { font-size:0.8rem; color:var(--gray); margin-bottom:0.875rem; line-height:1.5; font-weight:500; text-align:center; }
+.rating-row { display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; padding:0.25rem 0; }
+.rating-label { color:var(--gray); }
+.method-divider { border:none; border-top:1px solid var(--gray-border); margin:0.75rem 0; }
+.vant { font-size:0.78rem; color:var(--green); font-weight:600; margin-bottom:0.2rem; }
+.risco { font-size:0.78rem; color:var(--ch-orange); font-weight:600; margin-bottom:0.2rem; margin-top:0.5rem; }
+.method-text { font-size:0.76rem; color:var(--gray); line-height:1.45; }
+.demo-cta { background:linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%); border-radius:16px; padding:2.5rem; text-align:center; color:white; margin-top:2rem; }
+.demo-cta h3 { font-size:1.4rem; font-weight:700; margin-bottom:0.5rem; }
+.demo-cta p { opacity:0.9; font-size:0.9rem; margin-bottom:1.5rem; line-height:1.5; }
+.demo-btn { display:inline-block; background:white; color:var(--brand-dark); font-weight:700; font-size:0.9rem; padding:0.875rem 2rem; border-radius:50px; cursor:pointer; transition:all 0.2s; border:none; font-family:'DM Sans',sans-serif; }
+.demo-btn:hover { transform:translateY(-1px); box-shadow:0 4px 16px rgba(0,0,0,0.15); }
+.audit-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+.ticket-card { background:var(--white); border:1px solid var(--gray-border); border-radius:14px; overflow:hidden; transition:box-shadow 0.2s; }
+.ticket-card:hover { box-shadow:0 4px 20px rgba(0,0,0,0.07); }
+.ticket-head { padding:0.875rem 1.25rem; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--gray-border); background:var(--gray-light); }
+.ticket-tag-label { font-size:0.72rem; font-weight:700; font-family:'DM Mono',monospace; color:var(--gray); letter-spacing:0.02em; }
+.ticket-badge { font-size:0.68rem; font-weight:700; padding:0.2rem 0.6rem; border-radius:20px; white-space:nowrap; }
+.ticket-badge.edicao { background:var(--ch-orange-light); color:var(--ch-orange); }
+.ticket-badge.visualizacao { background:var(--blue-light); color:var(--blue); }
+.ticket-badge.conteudo { background:var(--brand-light); color:var(--brand-dark); }
+.ticket-badge.n3 { background:var(--purple-light); color:var(--purple); }
+.ticket-badge.ruido { background:var(--red-light); color:var(--red); }
+.ticket-body { padding:1.25rem; }
+.ticket-chat { margin-bottom:1rem; display:flex; flex-direction:column; gap:0.5rem; }
+.msg-row { display:flex; gap:0.5rem; align-items:flex-start; }
+.msg-row.right { flex-direction:row-reverse; }
+.msg-bubble { font-size:0.8rem; line-height:1.55; padding:0.6rem 0.85rem; border-radius:12px; max-width:90%; }
+.msg-bubble.client { background:#f0f2f5; color:var(--text); border-radius:12px 12px 12px 4px; }
+.msg-bubble.agent { background:var(--brand-light); color:var(--brand-dark); border-radius:12px 12px 4px 12px; }
+.msg-who { font-size:0.65rem; color:var(--gray); margin-top:0.15rem; white-space:nowrap; }
+.msg-who code { font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--brand-dark); background:var(--brand-light); padding:0 0.3rem; border-radius:3px; }
+.ticket-why { background:var(--gray-light); border-radius:8px; padding:0.75rem 1rem; font-size:0.78rem; color:var(--gray); line-height:1.55; border-left:3px solid var(--brand); }
+.ticket-why strong { color:var(--brand-dark); }
+.audit-filter-bar { display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; margin-bottom:1.25rem; }
+.audit-filter-bar .filter-label { font-size:0.78rem; font-weight:600; color:var(--gray); margin-right:0.25rem; }
+.filter-btn { padding:0.3rem 0.85rem; border-radius:20px; font-size:0.78rem; font-weight:600; cursor:pointer; border:1.5px solid var(--gray-border); background:white; color:var(--gray); transition:all 0.15s; font-family:'DM Sans',sans-serif; white-space:nowrap; }
+.filter-btn:hover { border-color:var(--brand); color:var(--brand); }
+.filter-btn.active { background:var(--brand); border-color:var(--brand); color:white; }
+.filter-btn.edicao.active { background:var(--ch-orange); border-color:var(--ch-orange); color:white; }
+.filter-btn.viz.active { background:var(--blue); border-color:var(--blue); color:white; }
+.filter-btn.cont.active { background:var(--brand); border-color:var(--brand); color:white; }
+.filter-btn.n3.active { background:var(--purple); border-color:var(--purple); color:white; }
+.filter-sep { width:1px; height:20px; background:var(--gray-border); margin:0 0.25rem; }
+.audit-count { font-size:0.78rem; color:var(--gray); margin-left:auto; }
+.ticket-card.hidden { display:none; }
+.mode-toggle { display:inline-flex; background:var(--white); border:1px solid var(--gray-border); border-radius:10px; padding:3px; margin-bottom:1.25rem; }
+.mode-toggle button { padding:0.45rem 1rem; font-size:0.8rem; font-weight:600; border:none; background:transparent; color:var(--gray); border-radius:8px; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.mode-toggle button.active { background:var(--brand); color:white; }
+.roi-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:1.25rem; }
+.roi-input { background:var(--white); border:1px solid var(--gray-border); border-radius:14px; padding:1.5rem; }
+.roi-input h4 { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray); margin-bottom:1rem; }
+.roi-field { margin-bottom:1rem; }
+.roi-field label { display:block; font-size:0.78rem; font-weight:500; color:var(--text); margin-bottom:0.35rem; }
+.roi-field input { width:100%; padding:0.55rem 0.75rem; font-family:'DM Sans',sans-serif; font-size:0.9rem; border:1px solid var(--gray-border); border-radius:8px; background:white; color:var(--text); }
+.roi-field input:focus { outline:none; border-color:var(--brand); }
+.roi-field .hint { font-size:0.7rem; color:var(--gray); margin-top:0.3rem; line-height:1.4; }
+.roi-output { background:linear-gradient(135deg,var(--dark) 0%,#1f3d70 100%); color:white; border-radius:14px; padding:1.75rem; }
+.roi-output h4 { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--brand-mid); margin-bottom:0.5rem; }
+.roi-period { display:inline-flex; background:rgba(255,255,255,0.08); border-radius:8px; padding:3px; margin-bottom:1.25rem; }
+.roi-period button { padding:0.35rem 0.85rem; font-size:0.75rem; font-weight:600; border:none; background:transparent; color:rgba(255,255,255,0.7); border-radius:6px; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.roi-period button.active { background:var(--brand); color:white; }
+.roi-result { background:rgba(255,255,255,0.08); border-radius:10px; padding:1rem 1.25rem; margin-bottom:0.75rem; display:flex; justify-content:space-between; align-items:center; }
+.roi-result.feat { background:rgba(45,212,191,0.18); border:1px solid rgba(45,212,191,0.4); }
+.roi-result .l { display:flex; flex-direction:column; gap:0.2rem; }
+.roi-result .lbl { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--brand-mid); }
+.roi-result .desc { font-size:0.7rem; color:rgba(255,255,255,0.7); }
+.roi-result .val { font-family:'DM Mono',monospace; font-size:1.4rem; font-weight:700; color:white; }
+.roi-result.feat .val { color:var(--teal); font-size:1.6rem; }
+@media(max-width:768px) {
+  .hero-grid { grid-template-columns:1fr 1fr; }
+  .tag-grid { grid-template-columns:1fr; }
+  .methods-grid { grid-template-columns:1fr 1fr; }
+  .bar-label { width:130px; font-size:0.72rem; }
+  .audit-grid { grid-template-columns:1fr; }
+  .roi-grid { grid-template-columns:1fr; }
+}
+</style>
+</head><body>
+<header class="site-header">
+  <div class="logos">
+    <div class="logo-client">
+      <img src="data:image/png;base64,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" alt="Mitfokus">
+    </div>
+    <div class="logo-sep"></div>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAA8CAMAAAAUhQWjAAAAQlBMVEVMaXEAAAD/17gAAAAAAAAAAAAAAAAAAAAAAAAAAAD/t4T/lVD/xZ3/iTz/3sL/vZD/hjj/3sEAAAD/vJD/z6v/pGjf8+0WAAAAEHRSTlMAEGBgQnucv+QiHlaMwMPO7mjARwAABG5JREFUeNrtmumasyoMgEV2u422vf9b/ZQ1CAguM/acp/kxYxlo8zYkhGSa5m9kGAa+dWHzSfIF+YJ8Qb4gX5A10l3a67W9bF2OCJEJEElIeakk6CiQ7nJ9Gnm0GyioGCb9cQiCKB9fCD08vuTcEXL3jPRSeQBI5yCsXFetl0oVLdSDSB4MjwNA0wlQAfk5ZDfI4xlJu5FjVMeCoGCYZkDAFLEXpH0mZIVNtMKCMR5YhKlhzsx3ngahauk4SbhZW+X6zEi1QSZ1kX6m0vvIpKFxf6oJYxDmldd23QGS46i2CR4/X8bhV8JhPxSCCOs+o5B9IF0WpNZP+PzztdYYDk86ohhE6S6zb7TX0Z10e0AYHOZK4QgEB0cO3gGyYI9qN7HxZwYS8E1OgmMQCnZWuPMO8/QVICINEliEqbicBGFu0o5zpGCQ56U2+q7eWujYrfUogFSZhKSjFlJGCPNIP8R81GKAYzg69K5xdwQPjPw5gmEWpsKVMOfhAedIEaSt9PZBYLODApBBTK5MuFVx+s2QZlcgSnsmfULzWyCPHbkWzAdNcOJBXnVgrnUMSECC/QZCzOuIZxNJnP0KeTqIzRv9nuKzYTlDxv70ocJybLmPdPd+kgWE9/vHya3qiCcSpaxF5Pw6KONJcutFqu8LID+h3JoPFGONBZD3Tyx1VjmJo68zh5FPA+n7Esg7DXL5WHukSTIYn4YScvTV++rTXP7a9yWSBZC0mxBSUYP7TQdJkyxxpE0SXaz+wkNikFe1h+S85AyQti+ZZJkjaZITQBIGmZEUDJI0yQkgbRIE7q4SR8okJ4Bc0yD9fw7k3ufkVbmzUhH4BJA+L6/X/wREsbz2gCBKS+ciwm4KGR/h9QURiklqvoTdJLu8L8lzK4i71DJXxPJlH/0TC3d7tx0gQWwny93sTQFi+kntoC9xmJLFgo9Yo2wF8Xf2LAiYwv01PS5eWBAKyhm2kTLoYvifgJAyCHjFg5t9AOJHBdJ14UFw04Zoi3tr44FoNonUJBkQ6r9Y4R6ZLtYJCkwD35MOriTuii4oc7KvcpIuDSJ91YRmQCjY6hSWTcF0xAGIdEVK4UGkTrWLe6vflmsNoHvAMiCgcMR9G2HQVUdYfjUgpiSsKpBSvSepDsBlL+mWk0bVTlwGYUCjwQYnNv9WtE+DBaaiykktyLKXlO4jW0FoAiRsrWjz+ZrlfZ9Jul8AYXUgPvKhpQS4ziS3ZjUIL4KEzZ48iDr+mTtX9pwlmRpdEiTQdRFEDvP2bxbEhZN9/p6rNUYgzH8YLoMErTucAZEYY2RNLAq3kkIMvlV0dTUIsU7pmjeLIMj5MIMnewhi8xkJN+ImP7k01SAmlxLCpRyLICYdFGB+vLXUv0sRSYRp4jVbY1fXrAAhIJmqAKHJXCvubAeZprPKvUTjLyeFQnwM4vJAWhF+3Rmv/vss7+wC5plhKaIol0mK7QQ6ir/6UGV4SbkQfBwm6o/ET5keZbSSMD7mtsQN+fl+AZ78nE1M/wDoWBwolq41cAAAAABJRU5ErkJggg==" style="height:32px;width:auto;display:block" alt="Cloud Humans"/>
+  </div>
+  <div class="header-badge">Diagnóstico Comercial · 1.413 conversas analisadas</div>
+</header>
+<nav class="nav-tabs">
+  <button class="nav-tab active" onclick="showTab('visao-geral',this)">Visão geral</button>
+  <button class="nav-tab" onclick="showTab('composicao',this)">Composição da base</button>
+  <button class="nav-tab" onclick="showTab('impacto',this)">Impacto operacional</button>
+  <button class="nav-tab" onclick="showTab('operacao',this)">Alinhamento operacional</button>
+  <button class="nav-tab" onclick="showTab('auditoria',this)">Amostras de auditoria</button>
+</nav>
+<main class="main">
+
+<div id="visao-geral" class="tab-content active">
+  <div class="section-header">
+    <div class="section-title">Diagnóstico Comercial — Mitfokus</div>
+    <div class="section-subtitle">1.413 conversas resolvidas analisadas (WhatsApp · Fev–Abr 2026 · 86 dias) · 30 temas consolidados · 397 conteúdos ideais mapeados</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="sc-sel-row">
+    <span style="font-size:0.8rem;font-weight:600;color:var(--gray)">Cenário:</span>
+    <button class="sc-sel-btn" id="sel-Conservador" onclick="setHeroScenario('Conservador')">Conservador</button>
+    <button class="sc-sel-btn active" id="sel-Realista" onclick="setHeroScenario('Realista')">Realista</button>
+    <button class="sc-sel-btn" id="sel-Otimista" onclick="setHeroScenario('Otimista')">Otimista</button>
+    <span style="width:1px;height:20px;background:var(--gray-border);margin:0 0.25rem"></span>
+    <button class="sc-sel-btn custom" id="sel-Customizado" onclick="setHeroScenario('Customizado')">Customizado</button>
+    <span style="font-size:0.7rem;color:var(--gray);margin-left:0.5rem">↳ ajuste por tema na aba Composição</span>
+  </div>
+  <div class="hero-grid">
+    <div class="hero-card featured">
+      <div class="label">Teto de automação</div>
+      <div class="value" id="hero-teto">91%</div>
+      <div class="sub" id="hero-teto-sub">Cenário Realista</div>
+      <div class="accent-bar"></div>
+    </div>
+    <div class="hero-card">
+      <div class="label">Tickets analisados</div>
+      <div class="value">1.413</div>
+      <div class="sub">30 temas · 86 dias</div>
+      <div class="accent-bar"></div>
+    </div>
+    <div class="hero-card" data-cls-card="Conteúdo">
+      <div class="label">Conteúdo</div>
+      <div class="value" style="color:var(--brand)" data-cls-pct>74%</div>
+      <div class="sub"><span data-cls-tickets>1,050</span> tickets · <span id="hero-teto-c" style="font-weight:700;color:var(--brand)">teto 100%</span></div>
+      <div class="accent-bar" style="background:var(--brand)"></div>
+    </div>
+    <div class="hero-card" data-cls-card="Visualização">
+      <div class="label">Visualização</div>
+      <div class="value" style="color:var(--blue)" data-cls-pct>16%</div>
+      <div class="sub"><span data-cls-tickets>231</span> tickets · <span id="hero-teto-v" style="font-weight:700;color:var(--blue)">teto 75%</span></div>
+      <div class="accent-bar" style="background:var(--blue)"></div>
+    </div>
+    <div class="hero-card" data-cls-card="Edição">
+      <div class="label">Edição</div>
+      <div class="value" style="color:var(--ch-orange)" data-cls-pct>6%</div>
+      <div class="sub"><span data-cls-tickets>91</span> tickets · <span id="hero-teto-e" style="font-weight:700;color:var(--ch-orange)">teto 65%</span></div>
+      <div class="accent-bar" style="background:var(--ch-orange)"></div>
+    </div>
+    <div class="hero-card" data-cls-card="Escalonado N3" style="border:2px solid var(--purple);background:var(--purple-light)">
+      <div class="label" style="color:var(--purple)">⚠ Humano obrigatório</div>
+      <div class="value" style="color:var(--purple)" data-cls-pct>2.8%</div>
+      <div class="sub" style="color:var(--purple);font-weight:600"><span data-cls-tickets>39</span> tickets · agendamento + jurídico</div>
+      <div class="accent-bar" style="background:var(--purple)"></div>
+    </div>
+  </div>
+  <div style="background:var(--purple-light);border-left:3px solid var(--purple);border-radius:0 10px 10px 0;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.875rem;color:var(--purple);line-height:1.55;display:flex;align-items:center;gap:1rem">
+    <span style="font-size:1.4rem">🟣</span>
+    <div>
+      <strong style="color:var(--purple)">Apenas 2.8% dos tickets (39 de 1.413) é irredutivelmente humano</strong> — agendamento comercial, casos jurídicos, consultoria especializada e gerenciamento de sistema, que sempre seguem direto para o time Mitfokus. Os outros <strong>97.2% têm potencial de retenção pela ClaudIA</strong>.
+    </div>
+  </div>
+  <div class="brand-info-box">
+    <span style="font-size:1.2rem">📋</span>
+    <div>
+      <strong>Sobre a análise:</strong> Operação 100% WhatsApp via Freshdesk Omni · 1.500 conversas resolvidas amostradas dos últimos 86 dias · 1.413 tickets úteis após filtro de ruído · 30 TAGs identificadas via clustering semântico · perfil clássico de contabilidade SaaS dominado por FAQ tributário (74% de Conteúdo).
+    </div>
+  </div>
+  <div class="section-header">
+    <div class="section-title" style="font-size:1.15rem">Como classificamos os tickets</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="tag-grid">
+    
+<div class="tag-card">
+  <div class="tag-name">Conteúdo</div>
+  <div class="tag-badge">100% nos 3 cenários</div>
+  <div class="tag-desc">FAQ pura — base de conhecimento resolve. Dúvidas tributárias, gestão empresarial, documentação fiscal, regulamentações.</div>
+  <div class="tag-pills">
+    <span class="pill pill-brand">Cons. 100%</span>
+    <span class="pill pill-brand">Real. 100%</span>
+    <span class="pill pill-brand">Otim. 100%</span>
+  </div>
+</div>
+<div class="tag-card orange">
+  <div class="tag-name">Edição</div>
+  <div class="tag-badge" style="background:var(--ch-orange-light);color:var(--ch-orange)">50% → 65% → 85%</div>
+  <div class="tag-desc">Exige escrita via API — cancelamentos, reset de senha, alteração de cadastro, problemas de acesso. Teto cresce com integrações.</div>
+  <div class="tag-pills">
+    <span class="pill pill-orange">Cons. 50%</span>
+    <span class="pill pill-orange">Real. 65%</span>
+    <span class="pill pill-orange">Otim. 85%</span>
+  </div>
+</div>
+<div class="tag-card blue">
+  <div class="tag-name">Visualização</div>
+  <div class="tag-badge" style="background:var(--blue-light);color:var(--blue)">60% → 75% → 85%</div>
+  <div class="tag-desc">Consulta read-only — status do certificado digital, situação fiscal, comprovantes, DMED. Integração de leitura no MitApp resolve.</div>
+  <div class="tag-pills">
+    <span class="pill pill-blue">Cons. 60%</span>
+    <span class="pill pill-blue">Real. 75%</span>
+    <span class="pill pill-blue">Otim. 85%</span>
+  </div>
+</div>
+<div class="tag-card purple">
+  <div class="tag-name">Escalonado N3</div>
+  <div class="tag-badge" style="background:var(--purple-light);color:var(--purple)">0% → 5% → 15%</div>
+  <div class="tag-desc">Humano sempre — agendamento comercial, casos jurídicos, consultoria especializada, gerenciamento de sistema. Handoff direto.</div>
+  <div class="tag-pills">
+    <span class="pill pill-purple">Cons. 0%</span>
+    <span class="pill pill-purple">Real. 5%</span>
+    <span class="pill pill-purple">Otim. 15%</span>
+  </div>
+</div>
+
+  </div>
+  <div class="info-box">
+    <strong>✓ Contexto Mitfokus:</strong> 74% de Conteúdo · 16% de Visualização · 6% de Edição · 2.8% Escalonado N3 · 0.1% Ruído. A TAG top-1 <em>Documentos e impostos</em> concentra 51,5% do volume; top-2 = 62,7%; top-3 = 70%. Apenas <strong>2.8% precisa irredutivelmente de humano</strong>. Teto de automação: <strong>88% conservador</strong> a <strong>94% otimista</strong>.
+  </div>
+</div>
+
+<div id="composicao" class="tab-content">
+  <div class="section-header">
+    <div class="section-title">Composição da base de suporte</div>
+    <div class="section-subtitle">30 macro-temas consolidados · 1.413 tickets · ordenado por volume</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="mode-toggle">
+    <button class="active" onclick="setCompMode('view',this)">Visualização padrão</button>
+    <button onclick="setCompMode('custom',this)">Modo Customizado</button>
+  </div>
+  <div class="comp-section">
+    <div class="comp-title">Principais temas do atendimento Mitfokus</div>
+    <div class="comp-sub">Hover no nome do tema vê a descrição. No modo Customizado: ajuste automatizar / classe / retenção por tema.</div>
+    
+    <div class="bar-row" data-id="tag_00" data-class="Conteúdo" data-total="727">
+      <div class="bar-label">
+        <span class="name">Documentos e impostos</span>
+        <span class="desc">Perguntas sobre obtenção de documentos fiscais, procedimentos tributários e orientações sobre impostos e declarações.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:100.0%;background:var(--brand)"><span>727 tickets</span></div></div>
+        <div class="bar-pct">51.5%</div>
+        <div class="bar-tag conteudo">Conteúdo</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo" selected>Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="100" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_00-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_01" data-class="Visualização" data-total="158">
+      <div class="bar-label">
+        <span class="name">Certificado Digital e Acompanhamentos</span>
+        <span class="desc">Dúvidas sobre emissão, renovação e problemas com certificado digital, além de consultas sobre status de solicitações e processos em andamento.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:22.4%;background:var(--blue)"><span>158 tickets</span></div></div>
+        <div class="bar-pct">11.2%</div>
+        <div class="bar-tag visualizacao">Visualização</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização" selected>Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="75" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_01-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_02" data-class="Conteúdo" data-total="103">
+      <div class="bar-label">
+        <span class="name">Gestão empresarial completa</span>
+        <span class="desc">Dúvidas sobre procedimentos, documentações, prazos e processos relacionados à abertura, alteração e gestão de empresas.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:14.6%;background:var(--brand)"><span>103 tickets</span></div></div>
+        <div class="bar-pct">7.3%</div>
+        <div class="bar-tag conteudo">Conteúdo</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo" selected>Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="100" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_02-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_03" data-class="Conteúdo" data-total="92">
+      <div class="bar-label">
+        <span class="name">Gestão de Funcionários</span>
+        <span class="desc">Perguntas sobre procedimentos trabalhistas, benefícios, admissão, demissão, férias e processos de RH para funcionários.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:13.0%;background:var(--brand)"><span>92 tickets</span></div></div>
+        <div class="bar-pct">6.5%</div>
+        <div class="bar-tag conteudo">Conteúdo</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo" selected>Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="100" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_03-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_04" data-class="Conteúdo" data-total="77">
+      <div class="bar-label">
+        <span class="name">Impostos e Tributação PJ</span>
+        <span class="desc">Dúvidas sobre funcionamento de impostos, DAS, Simples Nacional, distribuição de lucros e estratégias tributárias para pessoa jurídica.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:10.8%;background:var(--brand)"><span>77 tickets</span></div></div>
+        <div class="bar-pct">5.4%</div>
+        <div class="bar-tag conteudo">Conteúdo</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo" selected>Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="100" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_04-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_05" data-class="Visualização" data-total="51">
+      <div class="bar-label">
+        <span class="name">Pagamentos e Integração Bancária</span>
+        <span class="desc">Dúvidas sobre processos de cobrança, boletos, confirmação de pagamentos e configuração de integrações bancárias.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:7.2%;background:var(--blue)"><span>51 tickets</span></div></div>
+        <div class="bar-pct">3.6%</div>
+        <div class="bar-tag visualizacao">Visualização</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização" selected>Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="75" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_05-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_06" data-class="Edição" data-total="43">
+      <div class="bar-label">
+        <span class="name">Cancelamentos e Inativação</span>
+        <span class="desc">Perguntas sobre procedimentos, custos e prazos para cancelar serviços, desativar empresas ou solicitar planos de inatividade.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:6.0%;background:var(--ch-orange)"><span>43 tickets</span></div></div>
+        <div class="bar-pct">3.0%</div>
+        <div class="bar-tag edicao">Edição</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição" selected>Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="65" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_06-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_07" data-class="Edição" data-total="37">
+      <div class="bar-label">
+        <span class="name">Problemas de Acesso e Login</span>
+        <span class="desc">Dúvidas sobre senhas, cadastro, validação, recuperação de acesso e problemas técnicos na plataforma.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:5.2%;background:var(--ch-orange)"><span>37 tickets</span></div></div>
+        <div class="bar-pct">2.6%</div>
+        <div class="bar-tag edicao">Edição</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição" selected>Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="65" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_07-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_08" data-class="Conteúdo" data-total="30">
+      <div class="bar-label">
+        <span class="name">Equiparação Hospitalar e Tributação</span>
+        <span class="desc">Perguntas sobre equiparação hospitalar, regimes tributários, documentação necessária e procedimentos para regularização de empresas médicas.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:4.2%;background:var(--brand)"><span>30 tickets</span></div></div>
+        <div class="bar-pct">2.1%</div>
+        <div class="bar-tag conteudo">Conteúdo</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo" selected>Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="100" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_08-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_09" data-class="Escalonado N3" data-total="29">
+      <div class="bar-label">
+        <span class="name">Agendamento e Contato Comercial</span>
+        <span class="desc">Perguntas sobre como agendar, reagendar ou cancelar reuniões comerciais e entrar em contato com diferentes setores da empresa.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:4.2%;background:var(--purple)"><span>29 tickets</span></div></div>
+        <div class="bar-pct">2.1%</div>
+        <div class="bar-tag n3">Escalonado N3</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" ><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3" selected>Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="5" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_09-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_10" data-class="Visualização" data-total="13">
+      <div class="bar-label">
+        <span class="name">Solicitação de Documentos e Relatórios</span>
+        <span class="desc">Pedidos de envio de documentos, relatórios, planilhas e informações específicas que requerem consulta aos dados do sistema.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--blue)"><span>13 tickets</span></div></div>
+        <div class="bar-pct">0.9%</div>
+        <div class="bar-tag visualizacao">Visualização</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização" selected>Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="75" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_10-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_11" data-class="Conteúdo" data-total="10">
+      <div class="bar-label">
+        <span class="name">Taxas e Custos</span>
+        <span class="desc">Dúvidas sobre tipos, valores, frequência e formas de pagamento de taxas municipais, do conselho e outros custos relacionados a licenças e alvarás.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--brand)"><span>10 tickets</span></div></div>
+        <div class="bar-pct">0.7%</div>
+        <div class="bar-tag conteudo">Conteúdo</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo" selected>Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="100" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_11-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_12" data-class="Edição" data-total="6">
+      <div class="bar-label">
+        <span class="name">Gestão de Acessos</span>
+        <span class="desc">Dúvidas sobre criação, liberação e configuração de acessos de usuários nas plataformas Mitfokus e Mitnotas.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--ch-orange)"><span>6 tickets</span></div></div>
+        <div class="bar-pct">0.4%</div>
+        <div class="bar-tag edicao">Edição</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição" selected>Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="65" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_12-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_13" data-class="Escalonado N3" data-total="5">
+      <div class="bar-label">
+        <span class="name">Serviços Jurídicos e Declarações</span>
+        <span class="desc">Perguntas sobre disponibilidade de assistência jurídica, declarações fiscais específicas e parcerias para serviços contábeis.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--purple)"><span>5 tickets</span></div></div>
+        <div class="bar-pct">0.4%</div>
+        <div class="bar-tag n3">Escalonado N3</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" ><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3" selected>Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="5" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_13-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_14" data-class="Escalonado N3" data-total="3">
+      <div class="bar-label">
+        <span class="name">Gerenciamento de Sistema</span>
+        <span class="desc">Perguntas sobre responsabilidades e procedimentos para editar, deletar ou gerenciar funcionalidades e acessos no sistema.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--purple)"><span>3 tickets</span></div></div>
+        <div class="bar-pct">0.2%</div>
+        <div class="bar-tag n3">Escalonado N3</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" ><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3" selected>Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="5" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_14-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_15" data-class="Edição" data-total="3">
+      <div class="bar-label">
+        <span class="name">Acesso multiplataforma</span>
+        <span class="desc">Dúvidas sobre disponibilidade e funcionalidades do sistema em diferentes dispositivos (mobile, desktop, web).</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--ch-orange)"><span>3 tickets</span></div></div>
+        <div class="bar-pct">0.2%</div>
+        <div class="bar-tag edicao">Edição</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição" selected>Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="65" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_15-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_16" data-class="Conteúdo" data-total="3">
+      <div class="bar-label">
+        <span class="name">Regulamentação e Compliance</span>
+        <span class="desc">Dúvidas sobre requisitos legais, processos regulatórios e conformidade para empresas da área da saúde.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--brand)"><span>3 tickets</span></div></div>
+        <div class="bar-pct">0.2%</div>
+        <div class="bar-tag conteudo">Conteúdo</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo" selected>Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="100" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_16-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_17" data-class="Visualização" data-total="3">
+      <div class="bar-label">
+        <span class="name">Documentos e Comprovantes</span>
+        <span class="desc">Dúvidas sobre tipos de documentos aceitos, comprovantes de residência e renda para diferentes finalidades.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--blue)"><span>3 tickets</span></div></div>
+        <div class="bar-pct">0.2%</div>
+        <div class="bar-tag visualizacao">Visualização</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização" selected>Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="75" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_17-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_18" data-class="Conteúdo" data-total="3">
+      <div class="bar-label">
+        <span class="name">Gestão de Custos e Comissões</span>
+        <span class="desc">Dúvidas sobre distribuição de custos, políticas de comissão e cálculos trabalhistas relacionados a vendedores.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--brand)"><span>3 tickets</span></div></div>
+        <div class="bar-pct">0.2%</div>
+        <div class="bar-tag conteudo">Conteúdo</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo" selected>Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="100" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_18-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_19" data-class="Visualização" data-total="3">
+      <div class="bar-label">
+        <span class="name">Verificação DMED</span>
+        <span class="desc">Questões sobre conferência, validação e confirmação dos dados incluídos na Declaração de Serviços Médicos e de Saúde.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--blue)"><span>3 tickets</span></div></div>
+        <div class="bar-pct">0.2%</div>
+        <div class="bar-tag visualizacao">Visualização</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização" selected>Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="75" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_19-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_20" data-class="Conteúdo" data-total="2">
+      <div class="bar-label">
+        <span class="name">Compras empresariais CPF</span>
+        <span class="desc">Dúvidas sobre uso de CPF pessoal em compras corporativas e aquisições em nome da empresa.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--brand)"><span>2 tickets</span></div></div>
+        <div class="bar-pct">0.1%</div>
+        <div class="bar-tag conteudo">Conteúdo</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo" selected>Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="100" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_20-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_21" data-class="Conteúdo" data-total="2">
+      <div class="bar-label">
+        <span class="name">Questões Financeiras</span>
+        <span class="desc">Dúvidas sobre gerenciamento de orçamento e disponibilização do holerite mensal.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--brand)"><span>2 tickets</span></div></div>
+        <div class="bar-pct">0.1%</div>
+        <div class="bar-tag conteudo">Conteúdo</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo" selected>Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="100" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_21-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_22" data-class="Visualização" data-total="2">
+      <div class="bar-label">
+        <span class="name">Status de Chamados</span>
+        <span class="desc">Consultas sobre andamento, situação atual e detalhes de chamados técnicos específicos.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--blue)"><span>2 tickets</span></div></div>
+        <div class="bar-pct">0.1%</div>
+        <div class="bar-tag visualizacao">Visualização</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização" selected>Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="75" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_22-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_23" data-class="Escalonado N3" data-total="2">
+      <div class="bar-label">
+        <span class="name">Serviços de Consultoria</span>
+        <span class="desc">Informações sobre os tipos de consultoria oferecidos, incluindo gestão para clínicas e criação de Holdings.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--purple)"><span>2 tickets</span></div></div>
+        <div class="bar-pct">0.1%</div>
+        <div class="bar-tag n3">Escalonado N3</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" ><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3" selected>Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="5" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_23-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_24" data-class="Ruído" data-total="1">
+      <div class="bar-label">
+        <span class="name">Recusa Seguro Fiança</span>
+        <span class="desc">Perguntas sobre motivos de recusa do seguro fiança e orientações para proceder em caso de negativa.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--red)"><span>1 tickets</span></div></div>
+        <div class="bar-pct">0.1%</div>
+        <div class="bar-tag ruido">Ruído</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" ><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído" selected>Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="98" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_24-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_25" data-class="Conteúdo" data-total="1">
+      <div class="bar-label">
+        <span class="name">Solicitação de informações</span>
+        <span class="desc">Cliente solicita informações gerais que podem ser respondidas através de FAQ ou base de conhecimento.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--brand)"><span>1 tickets</span></div></div>
+        <div class="bar-pct">0.1%</div>
+        <div class="bar-tag conteudo">Conteúdo</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo" selected>Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="100" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_25-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_26" data-class="Visualização" data-total="1">
+      <div class="bar-label">
+        <span class="name">Consulta Férias Funcionário</span>
+        <span class="desc">Consulta sobre o saldo, período ou status das férias de um funcionário específico.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--blue)"><span>1 tickets</span></div></div>
+        <div class="bar-pct">0.1%</div>
+        <div class="bar-tag visualizacao">Visualização</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização" selected>Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="75" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_26-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_27" data-class="Ruído" data-total="1">
+      <div class="bar-label">
+        <span class="name">Anexos SMS SAMU</span>
+        <span class="desc">Dúvidas sobre o conceito, funcionamento e responsabilidades dos anexos no envio de SMS das notas do SAMU.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--red)"><span>1 tickets</span></div></div>
+        <div class="bar-pct">0.1%</div>
+        <div class="bar-tag ruido">Ruído</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" ><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição">Edição</option><option value="Visualização">Visualização</option><option value="Ruído" selected>Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="98" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_27-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_28" data-class="Edição" data-total="1">
+      <div class="bar-label">
+        <span class="name">Justificativa de ausência</span>
+        <span class="desc">Cliente justifica atraso ou ausência devido a compromissos profissionais como plantões médicos.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--ch-orange)"><span>1 tickets</span></div></div>
+        <div class="bar-pct">0.1%</div>
+        <div class="bar-tag edicao">Edição</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição" selected>Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="65" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_28-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-row" data-id="tag_29" data-class="Edição" data-total="1">
+      <div class="bar-label">
+        <span class="name">Atualização Cota GOv</span>
+        <span class="desc">Solicitações para atualizar ou modificar informações relacionadas à cota GOv no sistema.</span>
+      </div>
+      <div class="bar-track-wrap">
+        <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:2.5%;background:var(--ch-orange)"><span>1 tickets</span></div></div>
+        <div class="bar-pct">0.1%</div>
+        <div class="bar-tag edicao">Edição</div>
+        <div class="bar-customize" style="display:none">
+          <label class="switch-mini" title="Automatizar"><input type="checkbox" data-action="include" checked><span></span></label>
+          <select data-action="cls" title="Classe">
+            <option value="Conteúdo">Conteúdo</option><option value="Edição" selected>Edição</option><option value="Visualização">Visualização</option><option value="Ruído">Ruído</option><option value="Escalonado N3">Escalonado N3</option>
+          </select>
+          <input type="range" min="0" max="100" step="5" value="65" data-action="ret" title="Retenção %">
+          <span class="ret-pct" data-id="tag_29-pct">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="info-box" style="margin-top:1.5rem">
+    <strong>✓ Oportunidade imediata:</strong> Os 3 temas do topo (<em>Documentos e impostos</em>, <em>Certificado Digital</em> e <em>Gestão empresarial completa</em>) somam <strong>70%</strong> do volume. Endereçar esses fluxos com FAQ canônica + integração leve de leitura no MitApp tem o maior impacto imediato no teto de automação.
+  </div>
+</div>
+
+<div id="impacto" class="tab-content">
+  <div class="section-header">
+    <div class="section-title">Impacto operacional</div>
+    <div class="section-subtitle">Dois modos: Qualitativo (o que muda na operação) e ROI (custo projetado da ClaudIA).</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="mode-toggle">
+    <button class="active" onclick="setImpactMode('qual',this)">Impacto qualitativo</button>
+    <button onclick="setImpactMode('roi',this)">ROI / Custo</button>
+  </div>
+
+  <div id="impact-qual">
+    <div style="background:var(--brand-light);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem;display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center">
+      <div style="font-size:0.875rem;font-weight:600;color:var(--brand-dark);flex:1;min-width:160px">
+        Contexto da operação
+        <span style="display:block;font-size:0.75rem;font-weight:400;color:var(--brand);margin-top:0.2rem">Ajuste para refletir a realidade Mitfokus</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.25rem">
+        <div style="font-size:0.7rem;font-weight:600;color:var(--brand);text-transform:uppercase;letter-spacing:0.05em">1ª resposta (h)</div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <button class="ctrl-btn" onclick="changeOp('ttr',-1)">−</button>
+          <div class="ctrl-val-op" id="op-ttr">2</div>
+          <button class="ctrl-btn" onclick="changeOp('ttr',+1)">+</button>
+        </div>
+        <div style="font-size:0.68rem;color:var(--brand);opacity:0.7">horas hoje</div>
+      </div>
+      <div class="op-sep"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.25rem">
+        <div style="font-size:0.7rem;font-weight:600;color:var(--brand);text-transform:uppercase;letter-spacing:0.05em">Resolução (h)</div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <button class="ctrl-btn" onclick="changeOp('trt',-2)">−</button>
+          <div class="ctrl-val-op" id="op-trt">8</div>
+          <button class="ctrl-btn" onclick="changeOp('trt',+2)">+</button>
+        </div>
+        <div style="font-size:0.68rem;color:var(--brand);opacity:0.7">horas hoje</div>
+      </div>
+      <div class="op-sep"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.25rem">
+        <div style="font-size:0.7rem;font-weight:600;color:var(--brand);text-transform:uppercase;letter-spacing:0.05em">CSAT atual (%)</div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <button class="ctrl-btn" onclick="changeOp('csat',-5)">−</button>
+          <div class="ctrl-val-op" id="op-csat">85</div>
+          <button class="ctrl-btn" onclick="changeOp('csat',+5)">+</button>
+        </div>
+        <div style="font-size:0.68rem;color:var(--brand);opacity:0.7">% satisfação hoje</div>
+      </div>
+      <div class="op-sep"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.25rem">
+        <div style="font-size:0.7rem;font-weight:600;color:var(--brand);text-transform:uppercase;letter-spacing:0.05em">Tickets/mês</div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <button class="ctrl-btn" onclick="changeOp('vol',-100)">−</button>
+          <div class="ctrl-val-op" id="op-vol">500</div>
+          <button class="ctrl-btn" onclick="changeOp('vol',+100)">+</button>
+        </div>
+        <div style="font-size:0.68rem;color:var(--brand);opacity:0.7">±100 por clique</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem" id="metricsGrid"></div>
+    <div style="background:var(--white);border:1px solid var(--gray-border);border-radius:14px;padding:1.75rem;margin-bottom:1.5rem">
+      <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem">
+        <span style="display:block;width:3px;height:14px;background:var(--brand);border-radius:2px"></span>
+        Capacidade de escala sem contratar
+      </div>
+      <div id="scaleGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem"></div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--gray-border);border-radius:14px;padding:1.75rem;margin-bottom:1.5rem">
+      <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem">
+        <span style="display:block;width:3px;height:14px;background:var(--brand);border-radius:2px"></span>
+        O que o time ganha com esse tempo
+      </div>
+      <div id="timeGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem"></div>
+    </div>
+    <div class="info-box">
+      <strong>✓ Perspectiva:</strong> Com <span id="qualTeto">91</span>% dos tickets resolvidos pela ClaudIA no cenário Realista, o time de atendimento Mitfokus (Nathalia, Tamiles e demais) passa a focar exclusivamente nos <strong id="humanTickets">…</strong> tickets/mês que realmente exigem julgamento humano (consultoria especializada, agendamento comercial, casos jurídicos).
+    </div>
+  </div>
+
+  <div id="impact-roi" style="display:none">
+    <div class="roi-grid">
+      <div class="roi-input">
+        <h4>Premissas</h4>
+        <div class="roi-field">
+          <label>Volume mensal de tickets</label>
+          <input type="number" id="roi-vol" value="500" min="100" step="100">
+          <div class="hint">Estimativa Mitfokus: ~500 tickets/mês (1.413 em 86 dias × 30/86).</div>
+        </div>
+        <div class="roi-field">
+          <label>Teto de automação aplicado</label>
+          <input type="text" id="roi-teto" readonly>
+          <div class="hint">Vem do cenário selecionado na Visão Geral. Mude lá pra trocar aqui.</div>
+        </div>
+        <div class="roi-field">
+          <label>Preço por ticket resolvido (R$)</label>
+          <input type="number" id="roi-price" step="0.01" min="0">
+          <div class="hint">Default da tabela ClaudIA pelo volume — você pode editar para refletir negociação ou faixa-alvo.</div>
+        </div>
+        <div class="roi-field">
+          <label>Custo de setup único (R$)</label>
+          <input type="number" id="roi-setup" value="15000" min="0" step="1000">
+        </div>
+      </div>
+      <div class="roi-output">
+        <h4>Projeção</h4>
+        <div class="roi-period">
+          <button class="active" data-period="mes" onclick="setRoiPeriod('mes',this)">Mensal</button>
+          <button data-period="ano" onclick="setRoiPeriod('ano',this)">Anual</button>
+        </div>
+        <div class="roi-result feat">
+          <div class="l">
+            <span class="lbl">Tickets resolvidos pela IA</span>
+            <span class="desc">Volume × teto do cenário</span>
+          </div>
+          <span class="val" id="roi-resolvidos">—</span>
+        </div>
+        <div class="roi-result">
+          <div class="l">
+            <span class="lbl">Custo total ClaudIA</span>
+            <span class="desc">Tickets resolvidos × preço por ticket</span>
+          </div>
+          <span class="val" id="roi-custo">—</span>
+        </div>
+        <div class="roi-result">
+          <div class="l">
+            <span class="lbl">Custo por ticket resolvido</span>
+            <span class="desc">Inclui setup amortizado em 12 meses</span>
+          </div>
+          <span class="val" id="roi-cpt">—</span>
+        </div>
+        <div class="roi-result">
+          <div class="l">
+            <span class="lbl">Tickets restantes pra humano</span>
+            <span class="desc">Volume residual após automação</span>
+          </div>
+          <span class="val" id="roi-residual">—</span>
+        </div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:1.25rem">
+      <strong>✓ Modelo de cobrança:</strong> Cobrança apenas sobre tickets resolvidos pela ClaudIA — não cobramos por interação ou por usuário. Tabela ClaudIA por faixa: até 4.999/mês = R$3,89 · 5.000–9.999 = R$3,68 · 10.000–24.999 = R$3,31 · 25.000–49.999 = R$2,61 · acima de 50.000 = R$2,42. Setup único parcelável. Cancelamento com aviso prévio de 90 dias, sem multa.
+    </div>
+  </div>
+</div>
+
+<div id="operacao" class="tab-content">
+  <div class="section-header">
+    <div class="section-title">Alinhamento da operação — estratégia de conteúdo</div>
+    <div class="section-subtitle">4 abordagens para construir a base de conhecimento que alimenta a ClaudIA · cada uma com trade-offs diferentes</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="methods-grid">
+    <div class="method-card">
+      <div class="method-head">Extração de tickets</div>
+      <div class="method-body">
+        <div class="method-desc">Agrupa padrões de P&amp;R das interações reais a partir de IA Cloud Humans</div>
+        <div class="rating-row"><span class="rating-label">Qualidade</span><span>⭐⭐⭐☆☆</span></div>
+        <div class="rating-row"><span class="rating-label">Tempo</span><span>🕐🕐🕐☆☆</span></div>
+        <div class="rating-row"><span class="rating-label">Esforço time</span><span>👤👤👤☆☆</span></div>
+        <hr class="method-divider">
+        <div class="vant">✓ Vantagem</div>
+        <div class="method-text">Rápida construção · 397 conteúdos já mapeados neste diagnóstico</div>
+        <div class="risco">⚠ Risco</div>
+        <div class="method-text">Precisa de curadoria · pode ter alucinação</div>
+      </div>
+    </div>
+    <div class="method-card" style="border-color:var(--brand);box-shadow:0 4px 16px rgba(0,0,0,0.08)">
+      <div class="method-head" style="background:var(--brand-dark)">Central de ajuda Mitfokus ★</div>
+      <div class="method-body">
+        <div class="method-desc">Importação da FAQ existente em suporte.mitfokus.com.br</div>
+        <div class="rating-row"><span class="rating-label">Qualidade</span><span>⭐⭐⭐⭐☆</span></div>
+        <div class="rating-row"><span class="rating-label">Tempo</span><span>🕐☆☆☆☆</span></div>
+        <div class="rating-row"><span class="rating-label">Esforço time</span><span>👤☆☆☆☆</span></div>
+        <hr class="method-divider">
+        <div class="vant">✓ Vantagem</div>
+        <div class="method-text">Mitfokus já tem central pública robusta · playground em 1 semana · atualização automática</div>
+        <div class="risco">⚠ Risco</div>
+        <div class="method-text">Pode não capturar o tom personalizado do agente humano atual</div>
+      </div>
+    </div>
+    <div class="method-card">
+      <div class="method-head">PDFs / manuais</div>
+      <div class="method-body">
+        <div class="method-desc">Transformar manuais internos do time contábil em conteúdo</div>
+        <div class="rating-row"><span class="rating-label">Qualidade</span><span>⭐⭐⭐⭐☆</span></div>
+        <div class="rating-row"><span class="rating-label">Tempo</span><span>🕐🕐☆☆☆</span></div>
+        <div class="rating-row"><span class="rating-label">Esforço time</span><span>👤👤☆☆☆</span></div>
+        <hr class="method-divider">
+        <div class="vant">✓ Vantagem</div>
+        <div class="method-text">Usa material já existente · cobre regulamentações específicas</div>
+        <div class="risco">⚠ Risco</div>
+        <div class="method-text">Requer ajuste de tom para WhatsApp informal</div>
+      </div>
+    </div>
+    <div class="method-card">
+      <div class="method-head">Curadoria com agentes</div>
+      <div class="method-body">
+        <div class="method-desc">Construir P&amp;R com Júlio + Nathalia + Tamiles + agentes seniores</div>
+        <div class="rating-row"><span class="rating-label">Qualidade</span><span>⭐⭐⭐⭐⭐</span></div>
+        <div class="rating-row"><span class="rating-label">Tempo</span><span>🕐🕐🕐🕐☆</span></div>
+        <div class="rating-row"><span class="rating-label">Esforço time</span><span>👤👤👤👤☆</span></div>
+        <hr class="method-divider">
+        <div class="vant">✓ Vantagem</div>
+        <div class="method-text">Melhor controle de tom de voz e respostas Mitfokus</div>
+        <div class="risco">⚠ Risco</div>
+        <div class="method-text">Time-to-value mais demorado</div>
+      </div>
+    </div>
+  </div>
+  <div class="info-box">
+    <strong>✓ Recomendação para Mitfokus:</strong> Combinar <strong>Central de ajuda</strong> (quick win — Mitfokus já tem suporte.mitfokus.com.br) com <strong>Extração de tickets</strong> dos 397 conteúdos mapeados nesta análise para garantir que perguntas reais (Documentos e impostos, Certificado Digital, Gestão empresarial) estejam cobertas no dia 1.
+  </div>
+  <div class="demo-cta">
+    <h3>Próximo passo: demo ao vivo</h3>
+    <p>Mostramos a ClaudIA respondendo as TAGs top-3 da Mitfokus ao vivo<br>(<em>Documentos e impostos</em>, <em>Certificado Digital</em> e <em>Gestão empresarial</em> — 70% do volume).</p>
+    <button class="demo-btn">Agendar demonstração →</button>
+  </div>
+</div>
+
+<div id="auditoria" class="tab-content">
+  <div class="section-header">
+    <div class="section-title">Amostras de auditoria</div>
+    <div class="section-subtitle">Tickets reais auditados · base de 1.413 conversas Mitfokus (Fev–Abr 2026 · canal WhatsApp)</div>
+    <div class="section-rule"></div>
+  </div>
+  <div class="audit-filter-bar" id="auditFilterBar">
+    <span class="filter-label">Filtrar:</span>
+    <button class="filter-btn active" data-filter="all" onclick="filterAudit('all',this)">Todos</button>
+    <div class="filter-sep"></div>
+    <button class="filter-btn cont" data-filter="classif-conteudo" onclick="filterAudit('classif-conteudo',this)">🟢 Conteúdo</button>
+    <button class="filter-btn edicao" data-filter="classif-edicao" onclick="filterAudit('classif-edicao',this)">🟠 Edição</button>
+    <button class="filter-btn viz" data-filter="classif-visualizacao" onclick="filterAudit('classif-visualizacao',this)">🔵 Visualização</button>
+    <button class="filter-btn n3" data-filter="classif-n3" onclick="filterAudit('classif-n3',this)">🟣 N3</button>
+    <span class="audit-count" id="auditCount">— de — exemplos</span>
+  </div>
+  <div class="audit-grid">
+    
+    <div class="ticket-card" data-classif="conteudo" data-tag="tag_00">
+      <div class="ticket-head">
+        <span class="ticket-tag-label">Documentos e impostos</span>
+        <span class="ticket-badge conteudo">🟢 Conteúdo</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-chat">
+          <div class="msg-row "><div><div class="msg-bubble client">Para conseguir o demonstrativo de IR da empresa, preciso fazer contato com o Grupo BMP?</div><div class="msg-who">Cliente · ticket <code>0695d9dd…</code></div></div></div>
+          <div class="msg-row right"><div><div class="msg-bubble agent">O informe de rendimentos nós geramos por aqui. O que a BMP irá fazer é a declaração do imposto de renda.</div><div class="msg-who">Agente Mitfokus</div></div></div>
+        </div>
+        <div class="ticket-why"><strong>Por que Conteúdo?</strong> Perguntas sobre obtenção de documentos fiscais, procedimentos tributários e orientações sobre impostos e declarações.</div>
+      </div>
+    </div>
+
+    <div class="ticket-card" data-classif="visualizacao" data-tag="tag_01">
+      <div class="ticket-head">
+        <span class="ticket-tag-label">Certificado Digital e Acompanhamentos</span>
+        <span class="ticket-badge visualizacao">🔵 Visualização</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-chat">
+          <div class="msg-row "><div><div class="msg-bubble client">Como obter o documento CREMESP vigente da empresa?</div><div class="msg-who">Cliente · ticket <code>bcfcd9a8…</code></div></div></div>
+          <div class="msg-row right"><div><div class="msg-bubble agent">Enviou o arquivo por anexo e informou que também está disponível na plataforma da Mitfokus</div><div class="msg-who">Agente Mitfokus</div></div></div>
+        </div>
+        <div class="ticket-why"><strong>Por que Visualização?</strong> Dúvidas sobre emissão, renovação e problemas com certificado digital, além de consultas sobre status de solicitações e processos em andamento.</div>
+      </div>
+    </div>
+
+    <div class="ticket-card" data-classif="conteudo" data-tag="tag_02">
+      <div class="ticket-head">
+        <span class="ticket-tag-label">Gestão empresarial completa</span>
+        <span class="ticket-badge conteudo">🟢 Conteúdo</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-chat">
+          <div class="msg-row "><div><div class="msg-bubble client">O usuário quer entender os valores cobrados para alteração contratual com entrada de sócios, os prazos do processo na Junta Comercial, e tem dúvidas sobre cobranças duplicadas no sistema</div><div class="msg-who">Cliente · ticket <code>1d43d381…</code></div></div></div>
+          <div class="msg-row right"><div><div class="msg-bubble agent">O agente explicou que o valor é R$ 1.112,00 (com desconto) devido ao aumento de sócios, informou prazo de 10 dias (7 para viabilidade + 3 para protocolo), e removeu cobrança duplicada do sistema</div><div class="msg-who">Agente Mitfokus</div></div></div>
+        </div>
+        <div class="ticket-why"><strong>Por que Conteúdo?</strong> Dúvidas sobre procedimentos, documentações, prazos e processos relacionados à abertura, alteração e gestão de empresas.</div>
+      </div>
+    </div>
+
+    <div class="ticket-card" data-classif="conteudo" data-tag="tag_03">
+      <div class="ticket-head">
+        <span class="ticket-tag-label">Gestão de Funcionários</span>
+        <span class="ticket-badge conteudo">🟢 Conteúdo</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-chat">
+          <div class="msg-row "><div><div class="msg-bubble client">Quais são as exigências da categoria para benefícios como vale refeição, alimentação e transporte? Vocês fazem folha de pagamento? Qual o valor padrão de vale refeição?</div><div class="msg-who">Cliente · ticket <code>aea4f1d1…</code></div></div></div>
+          <div class="msg-row right"><div><div class="msg-bubble agent">O agente informou que são obrigatórios vale transporte e cesta básica (R$ 210,00), confirmou que fazem folha de pagamento por R$ 120,00/mês, disse que vale refeição não é obrigatório pela convenção coletiva de SP e sugeriu verificar valor médio da região.</div><div class="msg-who">Agente Mitfokus</div></div></div>
+        </div>
+        <div class="ticket-why"><strong>Por que Conteúdo?</strong> Perguntas sobre procedimentos trabalhistas, benefícios, admissão, demissão, férias e processos de RH para funcionários.</div>
+      </div>
+    </div>
+
+    <div class="ticket-card" data-classif="conteudo" data-tag="tag_04">
+      <div class="ticket-head">
+        <span class="ticket-tag-label">Impostos e Tributação PJ</span>
+        <span class="ticket-badge conteudo">🟢 Conteúdo</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-chat">
+          <div class="msg-row "><div><div class="msg-bubble client">Preciso de orientação sobre o controle mensal de distribuição de lucros da empresa considerando o novo imposto do governo para valores acima de R$ 50.000,00/mês</div><div class="msg-who">Cliente · ticket <code>432d4a4d…</code></div></div></div>
+          <div class="msg-row right"><div><div class="msg-bubble agent">Transferiu a solicitação para o departamento contábil sem fornecer informações específicas sobre o assunto</div><div class="msg-who">Agente Mitfokus</div></div></div>
+        </div>
+        <div class="ticket-why"><strong>Por que Conteúdo?</strong> Dúvidas sobre funcionamento de impostos, DAS, Simples Nacional, distribuição de lucros e estratégias tributárias para pessoa jurídica.</div>
+      </div>
+    </div>
+
+    <div class="ticket-card" data-classif="visualizacao" data-tag="tag_05">
+      <div class="ticket-head">
+        <span class="ticket-tag-label">Pagamentos e Integração Bancária</span>
+        <span class="ticket-badge visualizacao">🔵 Visualização</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-chat">
+          <div class="msg-row "><div><div class="msg-bubble client">Como fazer a integração com o banco Itaú e liberar acesso necessário</div><div class="msg-who">Cliente · ticket <code>6b17d1e3…</code></div></div></div>
+          <div class="msg-row right"><div><div class="msg-bubble agent">Forneceu um guia em PDF através de link do Google Drive</div><div class="msg-who">Agente Mitfokus</div></div></div>
+        </div>
+        <div class="ticket-why"><strong>Por que Visualização?</strong> Dúvidas sobre processos de cobrança, boletos, confirmação de pagamentos e configuração de integrações bancárias.</div>
+      </div>
+    </div>
+
+    <div class="ticket-card" data-classif="edicao" data-tag="tag_06">
+      <div class="ticket-head">
+        <span class="ticket-tag-label">Cancelamentos e Inativação</span>
+        <span class="ticket-badge edicao">🟠 Edição</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-chat">
+          <div class="msg-row "><div><div class="msg-bubble client">Como desativar minha empresa e quais as implicações do imposto de renda PJ/PF, já que entrei no Simples Nacional mas não vou usar a empresa por enquanto</div><div class="msg-who">Cliente · ticket <code>960d4431…</code></div></div></div>
+          <div class="msg-row right"><div><div class="msg-bubble agent">Explicou sobre DEFIS (declaração PJ), mencionou que empresa sem faturamento não paga impostos (apenas mensalidade), e redirecionou para parceiro BMP para IR pessoa física</div><div class="msg-who">Agente Mitfokus</div></div></div>
+        </div>
+        <div class="ticket-why"><strong>Por que Edição?</strong> Perguntas sobre procedimentos, custos e prazos para cancelar serviços, desativar empresas ou solicitar planos de inatividade.</div>
+      </div>
+    </div>
+
+    <div class="ticket-card" data-classif="edicao" data-tag="tag_07">
+      <div class="ticket-head">
+        <span class="ticket-tag-label">Problemas de Acesso e Login</span>
+        <span class="ticket-badge edicao">🟠 Edição</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-chat">
+          <div class="msg-row "><div><div class="msg-bubble client">A senha que recebi não está funcionando/está incorreta</div><div class="msg-who">Cliente · ticket <code>b0d91054…</code></div></div></div>
+          <div class="msg-row right"><div><div class="msg-bubble agent">O agente perguntou sobre o aplicativo Bird ID e tentou confirmar se era a senha da videoconferência, mas não forneceu uma solução direta para o problema da senha incorreta</div><div class="msg-who">Agente Mitfokus</div></div></div>
+        </div>
+        <div class="ticket-why"><strong>Por que Edição?</strong> Dúvidas sobre senhas, cadastro, validação, recuperação de acesso e problemas técnicos na plataforma.</div>
+      </div>
+    </div>
+
+    <div class="ticket-card" data-classif="n3" data-tag="tag_09">
+      <div class="ticket-head">
+        <span class="ticket-tag-label">Agendamento e Contato Comercial</span>
+        <span class="ticket-badge n3">🟣 Escalonado N3</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-chat">
+          <div class="msg-row "><div><div class="msg-bubble client">Como entrar em contato com o setor comercial da empresa?</div><div class="msg-who">Cliente · ticket <code>56e3e395…</code></div></div></div>
+          <div class="msg-row right"><div><div class="msg-bubble agent">O agente disse que realizaria contato transmitindo informações e proposta, mas não forneceu número ou canal direto de contato</div><div class="msg-who">Agente Mitfokus</div></div></div>
+        </div>
+        <div class="ticket-why"><strong>Por que Escalonado N3?</strong> Perguntas sobre como agendar, reagendar ou cancelar reuniões comerciais e entrar em contato com diferentes setores da empresa.</div>
+      </div>
+    </div>
+
+    <div class="ticket-card" data-classif="ruido" data-tag="tag_24">
+      <div class="ticket-head">
+        <span class="ticket-tag-label">Recusa Seguro Fiança</span>
+        <span class="ticket-badge ruido">🔴 Ruído</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-chat">
+          <div class="msg-row "><div><div class="msg-bubble client">Por que minha empresa teve o seguro fiança recusado pela seguradora para aluguel de imóvel e como posso resolver essa negativa?</div><div class="msg-who">Cliente · ticket <code>4dd69a70…</code></div></div></div>
+          <div class="msg-row right"><div><div class="msg-bubble agent">Informou que a empresa não realiza esse tipo de serviço de contato com seguradoras, que a pretendente não atingiu pontuação mínima e orientou a entrar em contato diretamente com a seguradora para verificar os parâmetros.</div><div class="msg-who">Agente Mitfokus</div></div></div>
+        </div>
+        <div class="ticket-why"><strong>Por que Ruído?</strong> Perguntas sobre motivos de recusa do seguro fiança e orientações para proceder em caso de negativa.</div>
+      </div>
+    </div>
+  </div>
+  <div class="info-box" style="margin-top:1.5rem">
+    <strong>✓ Padrão observado:</strong> A absoluta maioria dos tickets cai em Conteúdo (FAQ pura sobre documentação fiscal, gestão empresarial, tributação). Os agentes humanos respondem com excelência mas em volume crescente, e várias respostas seguem padrões repetidos que podem virar IDS — base de conhecimento — da ClaudIA. A operação tem perfil ideal para automação rápida com integração leve.
+  </div>
+</div>
+
+</main><script id="data" type="application/json">{"macros": [{"id": "tag_00", "name": "Documentos e impostos", "description": "Perguntas sobre obtenção de documentos fiscais, procedimentos tributários e orientações sobre impostos e declarações.", "total": 727, "pct": 51.5, "class": "Conteúdo"}, {"id": "tag_01", "name": "Certificado Digital e Acompanhamentos", "description": "Dúvidas sobre emissão, renovação e problemas com certificado digital, além de consultas sobre status de solicitações e processos em andamento.", "total": 158, "pct": 11.2, "class": "Visualização"}, {"id": "tag_02", "name": "Gestão empresarial completa", "description": "Dúvidas sobre procedimentos, documentações, prazos e processos relacionados à abertura, alteração e gestão de empresas.", "total": 103, "pct": 7.3, "class": "Conteúdo"}, {"id": "tag_03", "name": "Gestão de Funcionários", "description": "Perguntas sobre procedimentos trabalhistas, benefícios, admissão, demissão, férias e processos de RH para funcionários.", "total": 92, "pct": 6.5, "class": "Conteúdo"}, {"id": "tag_04", "name": "Impostos e Tributação PJ", "description": "Dúvidas sobre funcionamento de impostos, DAS, Simples Nacional, distribuição de lucros e estratégias tributárias para pessoa jurídica.", "total": 77, "pct": 5.4, "class": "Conteúdo"}, {"id": "tag_05", "name": "Pagamentos e Integração Bancária", "description": "Dúvidas sobre processos de cobrança, boletos, confirmação de pagamentos e configuração de integrações bancárias.", "total": 51, "pct": 3.6, "class": "Visualização"}, {"id": "tag_06", "name": "Cancelamentos e Inativação", "description": "Perguntas sobre procedimentos, custos e prazos para cancelar serviços, desativar empresas ou solicitar planos de inatividade.", "total": 43, "pct": 3.0, "class": "Edição"}, {"id": "tag_07", "name": "Problemas de Acesso e Login", "description": "Dúvidas sobre senhas, cadastro, validação, recuperação de acesso e problemas técnicos na plataforma.", "total": 37, "pct": 2.6, "class": "Edição"}, {"id": "tag_08", "name": "Equiparação Hospitalar e Tributação", "description": "Perguntas sobre equiparação hospitalar, regimes tributários, documentação necessária e procedimentos para regularização de empresas médicas.", "total": 30, "pct": 2.1, "class": "Conteúdo"}, {"id": "tag_09", "name": "Agendamento e Contato Comercial", "description": "Perguntas sobre como agendar, reagendar ou cancelar reuniões comerciais e entrar em contato com diferentes setores da empresa.", "total": 29, "pct": 2.1, "class": "Escalonado N3"}, {"id": "tag_10", "name": "Solicitação de Documentos e Relatórios", "description": "Pedidos de envio de documentos, relatórios, planilhas e informações específicas que requerem consulta aos dados do sistema.", "total": 13, "pct": 0.9, "class": "Visualização"}, {"id": "tag_11", "name": "Taxas e Custos", "description": "Dúvidas sobre tipos, valores, frequência e formas de pagamento de taxas municipais, do conselho e outros custos relacionados a licenças e alvarás.", "total": 10, "pct": 0.7, "class": "Conteúdo"}, {"id": "tag_12", "name": "Gestão de Acessos", "description": "Dúvidas sobre criação, liberação e configuração de acessos de usuários nas plataformas Mitfokus e Mitnotas.", "total": 6, "pct": 0.4, "class": "Edição"}, {"id": "tag_13", "name": "Serviços Jurídicos e Declarações", "description": "Perguntas sobre disponibilidade de assistência jurídica, declarações fiscais específicas e parcerias para serviços contábeis.", "total": 5, "pct": 0.4, "class": "Escalonado N3"}, {"id": "tag_14", "name": "Gerenciamento de Sistema", "description": "Perguntas sobre responsabilidades e procedimentos para editar, deletar ou gerenciar funcionalidades e acessos no sistema.", "total": 3, "pct": 0.2, "class": "Escalonado N3"}, {"id": "tag_15", "name": "Acesso multiplataforma", "description": "Dúvidas sobre disponibilidade e funcionalidades do sistema em diferentes dispositivos (mobile, desktop, web).", "total": 3, "pct": 0.2, "class": "Edição"}, {"id": "tag_16", "name": "Regulamentação e Compliance", "description": "Dúvidas sobre requisitos legais, processos regulatórios e conformidade para empresas da área da saúde.", "total": 3, "pct": 0.2, "class": "Conteúdo"}, {"id": "tag_17", "name": "Documentos e Comprovantes", "description": "Dúvidas sobre tipos de documentos aceitos, comprovantes de residência e renda para diferentes finalidades.", "total": 3, "pct": 0.2, "class": "Visualização"}, {"id": "tag_18", "name": "Gestão de Custos e Comissões", "description": "Dúvidas sobre distribuição de custos, políticas de comissão e cálculos trabalhistas relacionados a vendedores.", "total": 3, "pct": 0.2, "class": "Conteúdo"}, {"id": "tag_19", "name": "Verificação DMED", "description": "Questões sobre conferência, validação e confirmação dos dados incluídos na Declaração de Serviços Médicos e de Saúde.", "total": 3, "pct": 0.2, "class": "Visualização"}, {"id": "tag_20", "name": "Compras empresariais CPF", "description": "Dúvidas sobre uso de CPF pessoal em compras corporativas e aquisições em nome da empresa.", "total": 2, "pct": 0.1, "class": "Conteúdo"}, {"id": "tag_21", "name": "Questões Financeiras", "description": "Dúvidas sobre gerenciamento de orçamento e disponibilização do holerite mensal.", "total": 2, "pct": 0.1, "class": "Conteúdo"}, {"id": "tag_22", "name": "Status de Chamados", "description": "Consultas sobre andamento, situação atual e detalhes de chamados técnicos específicos.", "total": 2, "pct": 0.1, "class": "Visualização"}, {"id": "tag_23", "name": "Serviços de Consultoria", "description": "Informações sobre os tipos de consultoria oferecidos, incluindo gestão para clínicas e criação de Holdings.", "total": 2, "pct": 0.1, "class": "Escalonado N3"}, {"id": "tag_24", "name": "Recusa Seguro Fiança", "description": "Perguntas sobre motivos de recusa do seguro fiança e orientações para proceder em caso de negativa.", "total": 1, "pct": 0.1, "class": "Ruído"}, {"id": "tag_25", "name": "Solicitação de informações", "description": "Cliente solicita informações gerais que podem ser respondidas através de FAQ ou base de conhecimento.", "total": 1, "pct": 0.1, "class": "Conteúdo"}, {"id": "tag_26", "name": "Consulta Férias Funcionário", "description": "Consulta sobre o saldo, período ou status das férias de um funcionário específico.", "total": 1, "pct": 0.1, "class": "Visualização"}, {"id": "tag_27", "name": "Anexos SMS SAMU", "description": "Dúvidas sobre o conceito, funcionamento e responsabilidades dos anexos no envio de SMS das notas do SAMU.", "total": 1, "pct": 0.1, "class": "Ruído"}, {"id": "tag_28", "name": "Justificativa de ausência", "description": "Cliente justifica atraso ou ausência devido a compromissos profissionais como plantões médicos.", "total": 1, "pct": 0.1, "class": "Edição"}, {"id": "tag_29", "name": "Atualização Cota GOv", "description": "Solicitações para atualizar ou modificar informações relacionadas à cota GOv no sistema.", "total": 1, "pct": 0.1, "class": "Edição"}], "total": 1413, "class_totals": {"Conteúdo": 11, "Visualização": 7, "Edição": 6, "Escalonado N3": 4, "Ruído": 2}, "class_pct": {"Conteúdo": 74.3, "Visualização": 16.3, "Edição": 6.4, "Escalonado N3": 2.8, "Ruído": 0.1}, "tickets_per_class": {"Conteúdo": 1050, "Visualização": 231, "Edição": 91, "Escalonado N3": 39, "Ruído": 2}, "tetos": {"Conservador": 87.5, "Realista": 91.0, "Otimista": 94.2}, "retencao": {"Conservador": {"Conteúdo": 1.0, "Edição": 0.5, "Visualização": 0.6, "Ruído": 0.95, "Escalonado N3": 0.0}, "Realista": {"Conteúdo": 1.0, "Edição": 0.65, "Visualização": 0.75, "Ruído": 0.98, "Escalonado N3": 0.05}, "Otimista": {"Conteúdo": 1.0, "Edição": 0.85, "Visualização": 0.85, "Ruído": 0.99, "Escalonado N3": 0.15}}, "pricing_tiers": [[4999, 3.89], [9999, 3.68], [24999, 3.31], [49999, 2.61], [1000000000, 2.42]]}</script>
+<script>
+const DATA = JSON.parse(document.getElementById('data').textContent);
+const TETOS_RET = DATA.retencao;
+const TETOS_AGG = DATA.tetos;
+let currentScenario = 'Realista';
+let op = { ttr:2, trt:8, csat:85, vol:500 };
+let roiPeriod = 'mes';
+
+const CSTATE = {};
+DATA.macros.forEach(m => {
+  CSTATE[m.id] = {
+    cls: m.class,
+    include: !(m.class === 'Escalonado N3' || m.class === 'Ruído'),
+    ret: m.class === 'Conteúdo' ? 100 : (m.class === 'Edição' ? 65 : (m.class === 'Visualização' ? 75 : (m.class === 'Ruído' ? 98 : 5)))
+  };
+});
+
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'impacto') { renderImpact(); renderROI(); }
+  if (id === 'auditoria') { updateAuditCount(); }
+}
+
+// Cores por classe — usado pra recolorir bar-fill, badges e hero cards
+const CLS_COLOR = {
+  'Conteúdo':      { bg: '#1F3158', light: '#E5EAF3', dark: '#0E1A30', css: 'conteudo' },
+  'Edição':        { bg: '#FF8C42', light: '#FFF5EE', dark: '#FF8C42', css: 'edicao' },
+  'Visualização':  { bg: '#3B82F6', light: '#EFF6FF', dark: '#3B82F6', css: 'visualizacao' },
+  'Ruído':         { bg: '#EF4444', light: '#FEE2E2', dark: '#EF4444', css: 'ruido' },
+  'Escalonado N3': { bg: '#8B5CF6', light: '#F3EEFE', dark: '#8B5CF6', css: 'n3' },
+};
+const CLS_LABELS = ['Conteúdo','Edição','Visualização','Ruído','Escalonado N3'];
+
+function setHeroScenario(name) {
+  document.querySelectorAll('.sc-sel-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sel-'+name).classList.add('active');
+  currentScenario = name;
+  document.getElementById('hero-teto-sub').textContent = 'Cenário ' + name;
+  if (name !== 'Customizado') {
+    // Reset CSTATE para o cenário escolhido (e refletir no DOM da Composição)
+    const t = TETOS_RET[name];
+    DATA.macros.forEach(m => {
+      CSTATE[m.id] = {
+        cls: m.class,
+        include: !(m.class === 'Escalonado N3' || m.class === 'Ruído'),
+        ret: Math.round(t[m.class] * 100),
+      };
+    });
+    syncCompRowsFromState();
+  }
+  recalcAndRender();
+}
+
+function computeCustomTeto() {
+  let s = 0;
+  DATA.macros.forEach(m => {
+    const st = CSTATE[m.id];
+    if (st.include) s += m.total * st.ret / 100;
+  });
+  return s / DATA.total * 100;
+}
+
+function computeClassDistribution() {
+  // Distribui tickets entre classes baseado no CSTATE atual (override do leitor)
+  const dist = {};
+  CLS_LABELS.forEach(c => dist[c] = { tickets: 0, tags: 0 });
+  DATA.macros.forEach(m => {
+    const st = CSTATE[m.id];
+    dist[st.cls].tickets += m.total;
+    dist[st.cls].tags += 1;
+  });
+  return dist;
+}
+
+function recalcAndRender() {
+  // 1) Teto principal
+  let teto;
+  if (currentScenario === 'Customizado') teto = computeCustomTeto();
+  else teto = TETOS_AGG[currentScenario];
+  document.getElementById('hero-teto').textContent = Math.round(teto) + '%';
+
+  // 2) Hero cards por classe
+  const dist = computeClassDistribution();
+  document.querySelectorAll('[data-cls-card]').forEach(card => {
+    const cls = card.dataset.clsCard;
+    const d = dist[cls] || { tickets: 0, tags: 0 };
+    const pct = DATA.total > 0 ? (d.tickets / DATA.total * 100) : 0;
+    const pctEl = card.querySelector('[data-cls-pct]');
+    const tixEl = card.querySelector('[data-cls-tickets]');
+    if (pctEl) pctEl.textContent = (pct < 10 ? pct.toFixed(1) : Math.round(pct)) + '%';
+    if (tixEl) tixEl.textContent = d.tickets.toLocaleString('pt-BR');
+  });
+
+  // 3) Tetos por classe (texto "teto XX%" no sub dos hero cards) - reflete o cenário base
+  const tBase = TETOS_RET[currentScenario === 'Customizado' ? 'Realista' : currentScenario];
+  if (document.getElementById('hero-teto-c'))
+    document.getElementById('hero-teto-c').textContent = 'teto ' + Math.round(tBase['Conteúdo']*100) + '%';
+  if (document.getElementById('hero-teto-v'))
+    document.getElementById('hero-teto-v').textContent = 'teto ' + Math.round(tBase['Visualização']*100) + '%';
+  if (document.getElementById('hero-teto-e'))
+    document.getElementById('hero-teto-e').textContent = 'teto ' + Math.round(tBase['Edição']*100) + '%';
+
+  // 4) Impacto + ROI
+  renderImpact();
+  renderROI();
+}
+
+function syncCompRowsFromState() {
+  // Reflete o CSTATE no DOM das bar-rows (toggle/select/range/badge/cor)
+  document.querySelectorAll('.bar-row').forEach(row => {
+    const id = row.dataset.id;
+    const st = CSTATE[id];
+    if (!st) return;
+    const incEl = row.querySelector('input[data-action="include"]');
+    const clsEl = row.querySelector('select[data-action="cls"]');
+    const retEl = row.querySelector('input[data-action="ret"]');
+    const pctEl = row.querySelector('.ret-pct');
+    if (incEl) incEl.checked = st.include;
+    if (clsEl) clsEl.value = st.cls;
+    if (retEl) retEl.value = st.ret;
+    if (pctEl) pctEl.textContent = st.ret + '%';
+    row.classList.toggle('excluded', !st.include);
+    applyRowVisuals(row, st);
+  });
+}
+
+function applyRowVisuals(row, st) {
+  // Atualiza cor da barra + badge da classe
+  const fill = row.querySelector('.bar-fill');
+  const tag = row.querySelector('.bar-tag');
+  if (fill) fill.style.background = st.include ? CLS_COLOR[st.cls].bg : '#cbd0bf';
+  if (tag) {
+    tag.textContent = st.cls;
+    tag.className = 'bar-tag ' + CLS_COLOR[st.cls].css;
+  }
+}
+
+function setCompMode(mode, btn) {
+  document.querySelectorAll('#composicao .mode-toggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const show = (mode === 'custom');
+  document.querySelectorAll('.bar-customize').forEach(el => el.style.display = show ? 'flex' : 'none');
+  document.querySelectorAll('.bar-customize input[type=range]').forEach(el => {
+    const id = el.closest('.bar-row').dataset.id;
+    document.querySelector('[data-id="'+id+'-pct"]').textContent = el.value + '%';
+  });
+  if (show) setHeroScenario('Customizado');
+}
+
+function setImpactMode(mode, btn) {
+  document.querySelectorAll('#impacto .mode-toggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('impact-qual').style.display = mode === 'qual' ? 'block' : 'none';
+  document.getElementById('impact-roi').style.display = mode === 'roi' ? 'block' : 'none';
+  if (mode === 'qual') renderImpact();
+  if (mode === 'roi') renderROI();
+}
+
+function setRoiPeriod(p, btn) {
+  document.querySelectorAll('.roi-period button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  roiPeriod = p;
+  renderROI();
+}
+
+document.querySelectorAll('.bar-row').forEach(row => {
+  const id = row.dataset.id;
+  const incEl = row.querySelector('input[data-action="include"]');
+  const clsEl = row.querySelector('select[data-action="cls"]');
+  const retEl = row.querySelector('input[data-action="ret"]');
+  const pctEl = row.querySelector('.ret-pct');
+  if (!incEl) return;
+  if (CSTATE[id].cls === 'Escalonado N3' || CSTATE[id].cls === 'Ruído') incEl.checked = false;
+  pctEl.textContent = retEl.value + '%';
+  applyRowVisuals(row, CSTATE[id]);
+  function onChange() {
+    CSTATE[id].include = incEl.checked;
+    CSTATE[id].cls = clsEl.value;
+    CSTATE[id].ret = parseInt(retEl.value);
+    row.classList.toggle('excluded', !incEl.checked);
+    pctEl.textContent = retEl.value + '%';
+    applyRowVisuals(row, CSTATE[id]);
+    // Mexer em qualquer controle automaticamente migra pro Customizado
+    if (currentScenario !== 'Customizado') {
+      currentScenario = 'Customizado';
+      document.querySelectorAll('.sc-sel-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('sel-Customizado').classList.add('active');
+      document.getElementById('hero-teto-sub').textContent = 'Cenário Customizado';
+    }
+    recalcAndRender();
+  }
+  incEl.addEventListener('change', onChange);
+  clsEl.addEventListener('change', () => {
+    const def = clsEl.value === 'Conteúdo' ? 100 : (clsEl.value === 'Edição' ? 65 : (clsEl.value === 'Visualização' ? 75 : (clsEl.value === 'Ruído' ? 98 : 5)));
+    retEl.value = def;
+    onChange();
+  });
+  retEl.addEventListener('input', onChange);
+});
+
+function fmt(n) { return n.toLocaleString('pt-BR', {maximumFractionDigits:0}); }
+function fmtBR(n) { return 'R$ ' + n.toLocaleString('pt-BR', {maximumFractionDigits:0}); }
+
+function changeOp(key, d) {
+  const limits = { ttr:[1,48], trt:[2,168], csat:[10,100], vol:[100,100000] };
+  op[key] = Math.max(limits[key][0], Math.min(limits[key][1], op[key]+d));
+  renderImpact();
+}
+
+function getCurrentTeto() {
+  return (currentScenario === 'Customizado') ? computeCustomTeto() : TETOS_AGG[currentScenario];
+}
+
+function renderImpact() {
+  const teto = getCurrentTeto() / 100;
+  const iaVol = Math.round(op.vol * teto);
+  const human = op.vol - iaVol;
+  const trtIA = Math.max(0.1, Math.round(op.trt * 0.1 * 10) / 10);
+  const csatIA = Math.min(98, Math.round(op.csat * 1.1));
+  document.getElementById('op-ttr').textContent = op.ttr;
+  document.getElementById('op-trt').textContent = op.trt;
+  document.getElementById('op-csat').textContent = op.csat;
+  document.getElementById('op-vol').textContent = fmt(op.vol);
+  if (document.getElementById('humanTickets'))
+    document.getElementById('humanTickets').textContent = fmt(human);
+  if (document.getElementById('qualTeto'))
+    document.getElementById('qualTeto').textContent = Math.round(teto*100);
+  const mg = document.getElementById('metricsGrid');
+  if (mg) mg.innerHTML = `
+    <div class="impact-card highlight">
+      <div class="impact-label">⚡ Tempo de 1ª resposta</div>
+      <div class="impact-compare">
+        <div class="impact-before"><div class="impact-val before">${op.ttr}h</div><div class="impact-sub">Hoje</div></div>
+        <div class="impact-arrow">→</div>
+        <div class="impact-after"><div class="impact-val after">&lt;5min</div><div class="impact-sub">Com ClaudIA</div></div>
+      </div>
+      <div class="impact-delta">Resposta instantânea para ${Math.round(teto*100)}% das dúvidas</div>
+    </div>
+    <div class="impact-card highlight">
+      <div class="impact-label">⏱ Tempo de resolução</div>
+      <div class="impact-compare">
+        <div class="impact-before"><div class="impact-val before">${op.trt}h</div><div class="impact-sub">Hoje</div></div>
+        <div class="impact-arrow">→</div>
+        <div class="impact-after"><div class="impact-val after">${trtIA}h</div><div class="impact-sub">Com ClaudIA</div></div>
+      </div>
+      <div class="impact-delta">~90% mais rápido em FAQ</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-label">😊 CSAT projetado</div>
+      <div class="impact-compare">
+        <div class="impact-before"><div class="impact-val before">${op.csat}%</div><div class="impact-sub">Hoje</div></div>
+        <div class="impact-arrow">→</div>
+        <div class="impact-after"><div class="impact-val after">${csatIA}%</div><div class="impact-sub">Com ClaudIA</div></div>
+      </div>
+      <div class="impact-delta">+${csatIA-op.csat}pp esperados</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-label">🤖 Tickets resolvidos pela IA</div>
+      <div class="impact-compare">
+        <div class="impact-before"><div class="impact-val before">0</div><div class="impact-sub">Hoje</div></div>
+        <div class="impact-arrow">→</div>
+        <div class="impact-after"><div class="impact-val after">${fmt(iaVol)}</div><div class="impact-sub">Por mês</div></div>
+      </div>
+      <div class="impact-delta">${Math.round(teto*100)}% do volume</div>
+    </div>
+  `;
+
+  const sg = document.getElementById('scaleGrid');
+  if (sg) sg.innerHTML = `
+    <div class="scale-card"><div class="scale-val">${fmt(Math.round(op.vol*1.5))}</div><div class="scale-label">Volume +50%<br>sem novo agente</div></div>
+    <div class="scale-card featured"><div class="scale-val">${fmt(Math.round(op.vol*2))}</div><div class="scale-label">Volume 2× hoje<br>com mesmo time</div></div>
+    <div class="scale-card"><div class="scale-val">${fmt(Math.round(op.vol*3))}</div><div class="scale-label">Volume 3× hoje<br>com 1 agente extra</div></div>
+  `;
+
+  const tg = document.getElementById('timeGrid');
+  if (tg) tg.innerHTML = `
+    <div class="time-card"><div class="time-icon">📚</div><div class="time-title">Curadoria da IDS</div><div class="time-desc">Time foca em revisar respostas da ClaudIA, melhorar conteúdos novos e cobrir lacunas.</div></div>
+    <div class="time-card"><div class="time-icon">👨‍⚕️</div><div class="time-title">Atendimento consultivo</div><div class="time-desc">Casos complexos (planejamento tributário avançado, clínicas Pro) ganham mais atenção dedicada.</div></div>
+    <div class="time-card"><div class="time-icon">📈</div><div class="time-title">Crescimento sem custo</div><div class="time-desc">Mitfokus pode crescer 2-3× a base de médicos sem proporcionalmente aumentar o time de atendimento.</div></div>
+  `;
+}
+
+function pricingFor(vol) {
+  for (const [cap, p] of DATA.pricing_tiers) { if (vol <= cap) return p; }
+  return DATA.pricing_tiers[DATA.pricing_tiers.length-1][1];
+}
+
+function renderROI() {
+  const tetoEl = document.getElementById('roi-teto');
+  const volEl = document.getElementById('roi-vol');
+  const priceEl = document.getElementById('roi-price');
+  const setupEl = document.getElementById('roi-setup');
+  if (!tetoEl) return;
+  const teto = getCurrentTeto() / 100;
+  tetoEl.value = Math.round(teto*100) + '% (' + currentScenario + ')';
+  const vol = parseInt(volEl.value) || 0;
+  const defaultPrice = pricingFor(vol);
+  if (!priceEl.dataset.touched) priceEl.value = defaultPrice.toFixed(2);
+  const price = parseFloat(priceEl.value) || defaultPrice;
+  const setup = parseInt(setupEl.value) || 0;
+  const resolvidos = Math.round(vol * teto);
+  const custoMes = resolvidos * price;
+  const custoAno = custoMes * 12;
+  const setupMes = setup / 12;
+  const cptComSetup = resolvidos > 0 ? (custoMes + setupMes) / resolvidos : 0;
+  const residual = vol - resolvidos;
+  const factor = roiPeriod === 'ano' ? 12 : 1;
+  document.getElementById('roi-resolvidos').textContent = fmt(resolvidos * factor) + (roiPeriod === 'ano' ? '/ano' : '/mês');
+  document.getElementById('roi-custo').textContent = fmtBR(custoMes * factor);
+  document.getElementById('roi-cpt').textContent = 'R$ ' + cptComSetup.toFixed(2);
+  document.getElementById('roi-residual').textContent = fmt(residual * factor) + (roiPeriod === 'ano' ? '/ano' : '/mês');
+}
+
+document.getElementById('roi-vol').addEventListener('input', () => { document.getElementById('roi-price').dataset.touched = ''; renderROI(); });
+document.getElementById('roi-price').addEventListener('input', e => { e.target.dataset.touched = '1'; renderROI(); });
+document.getElementById('roi-setup').addEventListener('input', renderROI);
+
+function filterAudit(f, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ticket-card').forEach(c => {
+    const cls = 'classif-' + c.dataset.classif;
+    c.classList.toggle('hidden', f !== 'all' && cls !== f);
+  });
+  updateAuditCount(f);
+}
+
+function updateAuditCount(f) {
+  const all = document.querySelectorAll('.ticket-card');
+  const visible = document.querySelectorAll('.ticket-card:not(.hidden)');
+  document.getElementById('auditCount').textContent = visible.length + ' de ' + all.length + ' exemplos';
+}
+
+recalcAndRender();
+updateAuditCount();
+</script>
+</body>
+</html>
